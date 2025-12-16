@@ -1,5 +1,15 @@
 # ComfyUI Whisper
 
+## Attribution
+Original project by yuvraj108c:
+<https://github.com/yuvraj108c/ComfyUI-Whisper>
+
+## Modifications
+This fork adds:
+- 增加了alignment的输入节点，可以使得字幕可以根据字符串灵活输入。
+
+## 以下是原项目README
+
 Transcribe audio and add subtitles to videos using [Whisper](https://github.com/openai/whisper/) in [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 Support multiple languages, prompt guidance and multiple whisper models.
 
