@@ -2,6 +2,7 @@ from PIL import ImageDraw, ImageFont, Image
 from .utils import tensor2pil, pil2tensor, tensor2Mask
 import math
 import os
+import json
 
 FONT_DIR = os.path.join(os.path.dirname(__file__),"fonts")
 
@@ -12,7 +13,7 @@ class AddSubtitlesToFramesNode:
         return {
             "required": { 
                 "images": ("IMAGE",),
-                "alignment" : ("whisper_alignment",),
+                "alignment_str" : ("STRING",),
                 "font_color": ("STRING",{
                     "default": "white"
                 }),
@@ -48,7 +49,7 @@ class AddSubtitlesToFramesNode:
     CATEGORY = "whisper"
 
 
-    def add_subtitles_to_frames(self, images, alignment, font_family, font_size, font_color, x_position, y_position, center_x, center_y, video_fps):
+    def add_subtitles_to_frames(self, images, alignment_str, font_family, font_size, font_color, x_position, y_position, center_x, center_y, video_fps):
         pil_images = tensor2pil(images)
 
         pil_images_with_text = []
@@ -57,6 +58,8 @@ class AddSubtitlesToFramesNode:
         subtitle_coord = []
 
         font = ImageFont.truetype(os.path.join(FONT_DIR,font_family), font_size)
+
+        alignment = json.loads(alignment_str)
 
         if len(alignment) == 0:
             pil_images_with_text = pil_images

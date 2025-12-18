@@ -1,20 +1,22 @@
 import ast
+import json
 
 class StringToWhisperAlignmentNode:
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
+                "video_duration": ("FLOAT", {"forceInput": True}),
                 "alignment_str": ("STRING", {
                     "multiline": True,
                     "default": "[{'value':'123','start':0.1,'end':0.2}]"
                 }),
-                "video_duration": ("FLOAT", {"forceInput": True}),
+                
             }
         }
 
-    RETURN_TYPES = ("whisper_alignment",)
-    RETURN_NAMES = ("alignment",)
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("whisper_alignment_json",)
     FUNCTION = "string_to_alignment"
     CATEGORY = "whisper"
 
@@ -44,4 +46,4 @@ class StringToWhisperAlignmentNode:
         except Exception as e:
             raise RuntimeError(f"Failed to parse whisper_alignment: {e}")
 
-        return (alignment,)
+        return (json.dumps(alignment, ensure_ascii=False),)
